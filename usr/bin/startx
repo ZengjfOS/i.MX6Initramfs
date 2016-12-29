@@ -1,0 +1,28 @@
+#!/bin/sh
+IS_BABBAGE=NO
+grep Babbage /proc/cpuinfo > /dev/null 2>&1
+if [ $? = 0 ]; then
+	IS_BABBAGE=YES
+	Xfbdev -keybd keyboard,,device=/dev/input/keyboard0 -mouse mouse,2,device=/dev/input/mice &
+fi
+
+if [ -L /dev/input/ts0 ]; then
+	Xfbdev -mouse tslib,2,device=/dev/input/ts0 -mouse mouse,2,device=/dev/input/mice&
+else
+	Xfbdev -mouse mouse,2,device=/dev/input/mice&
+fi
+
+sleep 8
+
+matchbox-window-manager -d :0 -use_lowlight no -use_titlebar yes -use_cursor yes&
+matchbox-desktop&
+matchbox-panel  --bgtrans yes  &
+sleep 5
+# Calibrate when using the rootfs the first time
+# Check whether the touch screen exists
+if [ -L /dev/input/ts0 ]; then
+	ls /usr/etc | grep pointercal > /dev/null 2>&1
+	if [ $? = 1 ]; then
+		ts_calibrate
+	fi
+fi
