@@ -1,3 +1,6 @@
+# imx file system
+
+```
 zengjf@zengjf:~/imxFileSystem/tinyfs/tinyfs$ tree -L 1
 .
 ├── bin
@@ -19,4 +22,4 @@ zengjf@zengjf:~/imxFileSystem/tinyfs/tinyfs$ tree -L 1
 
 14 directories, 2 files
 zengjf@zengjf:~/imxFileSystem/tinyfs/tinyfs$ 
-
+```
